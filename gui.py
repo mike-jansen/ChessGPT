@@ -76,8 +76,9 @@ import chessgpt  # import your AI module
 def make_black_move():
     if board.turn == chess.BLACK:
         # passing the board layout as FEN makes parsing easier, question is just if GPT understands FEN or if you need to use ASCII
-        san_move = chessgpt.choose_black_move(board.fen())  # FEN Representation
+        # san_move = chessgpt.choose_black_move(board.fen())  # FEN Representation
         # uci_move = chessgpt.choose_black_move(str(board))  # ASCII Representation
+        san_move = chessgpt.choose_black_move('chess_board.png')
 
         if san_move:
             move = board.parse_san(san_move)

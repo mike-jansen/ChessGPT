@@ -6,16 +6,13 @@ import os
 client = OpenAI()
 
 # called by the GUI when its black's turn to move
-def choose_black_move(fen_str):
-    board = chess.Board(fen_str)
-    # legal_moves = list(board.legal_moves)
-    legal_moves = [board.san(move) for move in list(board.legal_moves)]
+def choose_black_move(image):
+    # board = chess.Board(fen_str)
+    # legal_moves = [board.san(move) for move in list(board.legal_moves)]
+    # move = get_random_move(legal_moves)
 
-    if legal_moves:
-        # move = get_random_move(legal_moves)
-        move = get_ai_response(fen_str, legal_moves)
-        return move
-    return None
+    move = get_ai_response(image)
+    return move
 
 def get_random_move(legal_moves):
     import random
@@ -28,9 +25,9 @@ def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
 
-def get_ai_response(board, legal_moves):
-    base64_image = encode_image('chess_board.png')
-    
+def get_ai_response(image):
+    base64_image = encode_image(image)
+
     response = client.responses.create(
         model="gpt-4.1",
         input=[
