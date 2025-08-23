@@ -1,1 +1,1 @@
-# ChessGPT, a GPT-4 powered Chess AI
+# ChessGPT, a GPT-5 powered Chess AI
