@@ -13,7 +13,7 @@ RED = (255, 80, 80)
 # Initialize Pygame
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Chess with Images")
+pygame.display.set_caption("ChessGPT")
 
 # Load board
 board = chess.Board()
