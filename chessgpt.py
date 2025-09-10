@@ -59,10 +59,12 @@ def get_ai_response(fen):
             {"role": "user", "content": f"Board layout in FEN: {fen}"}
     ]
 
+    print("Calling API with board layout...")
     response = client.responses.create(
         model="gpt-5",
         tools=tools,
         input=input_messages,
+        reasoning={"effort": "low"},  # only useable by gpt-5
     )
 
     # check if the response contains a tool call
@@ -74,6 +76,7 @@ def get_ai_response(fen):
         name = item.name
         args = json.loads(item.arguments)
         result = call_function(name, args)
+        print("GPT called function:", name)
 
         # append model's input message. GPT-4 didnt have reasoning included in the output, so .append worked.
         # However, GPT-5 has reasoning included in the output, so .append would add a list as an item, instead of adding all items to the list
@@ -84,10 +87,12 @@ def get_ai_response(fen):
             "output": str(result)
         })
 
+        print("Passing function result back to model...")
         response = client.responses.create(
             model="gpt-5",
             input=input_messages,
             tools=tools,
+            reasoning={"effort": "minimal"},
         )
 
     move, reason = response.output_text.splitlines()
